@@ -17,6 +17,18 @@ display.setDefault("background", 115/255, 230/255, 0/255)
 --create a local variable
 local textObject
 local textObjectSignature
+local backgroundMusic 
+-----------------------------------------------------------------------------------------
+--SOUNDS
+-----------------------------------------------------------------------------------------
+
+--correct sound
+local backgroundMusic = audio.loadSound( "Sounds/bkgMusic.mp3" ) -- Setting a variable to a MP3 file
+
+local backgroundSoundChannel
+
+backgroundSoundChannel = audio.play(backgroundMusic)
+
 
 --displays text on the screen at the position x = 400 and y = 400 with
 --a deafult font style and font size of 45
