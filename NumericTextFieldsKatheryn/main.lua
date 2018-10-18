@@ -11,6 +11,12 @@ display.setStatusBar(display.HiddenStatusBar)
 --set the background color
 display.setDefault("background", 153/255, 153/255, 255/255)
 
+--make daffy duck apear
+local daffyDuck = display.newImageRect("Images/daffyDuck.png",500, 500)
+
+--set initial x and y position of daffyDuck
+daffyDuck.x = display.contentWidth/4
+daffyDuck.y = display.contentHeight/1.35
 -----------------------------------------------------------------------------------------
 --LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -25,6 +31,23 @@ local randomNumber2
 local userAnswer
 local correctAnswer
 local incorrectAnswer
+local randonOperator
+local correctSound
+local incorrectSound
+local incorrectSoundChannel
+-----------------------------------------------------------------------------------------
+--SOUNDS
+-----------------------------------------------------------------------------------------
+
+--correct sound
+local correctSound = audio.loadSound( "Sounds/correctSound.mp3" ) -- Setting a variable to a MP3 file
+
+local correctSoundChannel
+
+--Incorrect Sound
+local incorrectSound = audio.loadSound("Sounds/wrongSound.mp3")
+
+local incorrectSoundChannel 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -33,7 +56,6 @@ local function AskQuestion()
 	--generate 2 random numbers between a max. and a min. number
 	randomNumber1 = math.random(0, 10)
 	randomNumber2 = math.random(0, 10)
-
 	-- Generates random number from 1 to 3
 	randomOperator = math.random(1, 3)
 
@@ -54,7 +76,7 @@ local function AskQuestion()
 		--create question in text object
 		questionObject.text = randomNumber1 .. " - " .. randomNumber2 .. " = "
 
-	 else (randomOperator == 3) then 
+	 elseif (randomOperator == 3) then 
 		--calculate correct answer 
 		correctAnswer = randomNumber1 * randomNumber2
 
@@ -77,10 +99,8 @@ end
 local function NumericFieldListener(event)
 
 	-- User begins editing "numericField"
-	if( event.phase == " began " ) then 
-
-		--Clear text Field
-		event.target.text = ""
+	if( event.phase == " began " ) then
+		
 
 	elseif (event.phase == "submitted") then 
 
@@ -91,11 +111,21 @@ local function NumericFieldListener(event)
 		if (userAnswer == correctAnswer) then 
 			correctObject.isVisible = true
 			incorrectObject.isVisible = false
+
+			event.target.text = ""
+
+			correctSoundChannel = audio.play(correctSound)
+
 			timer.performWithDelay(2000, HideCorrect)
 
 		else
 			correctObject.isVisible = false
 			incorrectObject.isVisible = true
+
+			event.target.text = ""
+
+			incorrectSoundChannel = audio.play(incorrectSound)
+
 			timer.performWithDelay(4000, HideIncorrect)
 
 		end
@@ -119,7 +149,7 @@ correctObject.isVisible = false
 --create the incorrect text object and make it invisible
 incorrectObject = display.newText(" Incorrect ", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
 incorrectObject:setTextColor( 255/255, 210/255, 40/255)
-incorrectObject.isVisible = true
+incorrectObject.isVisible = false
 -- Create numeric field 
 numericField = native.newTextField( display.contentWidth/2, display.contentHeight/2, 150, 80 )
 numericField.inputType = "number"
@@ -134,4 +164,5 @@ numericField:addEventListener("userInput", NumericFieldListener)
 
 --call the function to ask the questions
 AskQuestion()
+
 
