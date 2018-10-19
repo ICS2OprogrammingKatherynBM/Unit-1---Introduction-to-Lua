@@ -7,6 +7,11 @@
 --hide the status bar
 display.setStatusBar(display.HiddenStatusBar)
 
+local waveSound = audio.loadSound("Sounds/wave.mp3")
+
+local waveSoundChannel
+
+waveSoundChannel = audio.play(waveSound)
 --global vriables
 scrollSpeed = 3
 
