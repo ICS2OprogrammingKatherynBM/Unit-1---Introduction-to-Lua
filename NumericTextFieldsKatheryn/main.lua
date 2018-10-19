@@ -21,8 +21,8 @@ daffyDuck.y = display.contentHeight/1.35
 --LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
---create local variables
-local questionObject
+--create local VARIABLES    				
+local questionObject			
 local incorrectObject
 local correctObject
 local numericField
@@ -35,6 +35,9 @@ local randonOperator
 local correctSound
 local incorrectSound
 local incorrectSoundChannel
+local correctAnswers
+local numberOfPoints = 0
+local pointsObjects
 -----------------------------------------------------------------------------------------
 --SOUNDS
 -----------------------------------------------------------------------------------------
@@ -56,6 +59,7 @@ local function AskQuestion()
 	--generate 2 random numbers between a max. and a min. number
 	randomNumber1 = math.random(0, 10)
 	randomNumber2 = math.random(0, 10)
+
 	-- Generates random number from 1 to 3
 	randomOperator = math.random(1, 3)
 
@@ -109,12 +113,13 @@ local function NumericFieldListener(event)
 
 		--if the users answer and the correct answer the same:
 		if (userAnswer == correctAnswer) then 
+			numberOfPoints = numberOfPoints + 1
 			correctObject.isVisible = true
-			incorrectObject.isVisible = false
 
-			event.target.text = ""
-
+			
 			correctSoundChannel = audio.play(correctSound)
+
+			points.text = "points = ".. numberOfPoints
 
 			timer.performWithDelay(2000, HideCorrect)
 
@@ -122,13 +127,15 @@ local function NumericFieldListener(event)
 			correctObject.isVisible = false
 			incorrectObject.isVisible = true
 
-			event.target.text = ""
 
 			incorrectSoundChannel = audio.play(incorrectSound)
 
 			timer.performWithDelay(4000, HideIncorrect)
 
 		end
+
+		event.target.text = ""
+
 	end
 end
 
@@ -140,6 +147,9 @@ end
 --display a question and sets the colour
 questionObject = display.newText("", display.contentWidth/3, display.contentHeight/2, nil, 50 )
 questionObject:setTextColor( 102/255, 255/255, 255/255)
+
+--display number of points
+pointsObjects = display.newText("points = " .. numberOfPoints , display.contentWidth/2, display.contentHeight/4, nil, 50)
 
 --create the correct text object and make it invisible 
 correctObject = display.newText(" Correct!", display.contentWidth/2, display.contentHeight*2/3, nil, 50 )
