@@ -43,6 +43,15 @@ myRectangle:setFillColor(0.7, 0.1, 0.3)
 --set the color of the border
 myRectangle:setStrokeColor(1, 0, 1)
 
+--set the width of the border
+myCircle.strokeWidth = 10
+
+--set the color of the circle
+myCircle:setFillColor(0.2, 0.2, 0.3)
+
+--set the colour of the border
+myCircle:setStrokeColor(0/255, 204/255, 204/255)
+
 --calculate the area
 areaOfRectangle = widthOfRectangle * heightOfRectangle
 
@@ -68,9 +77,12 @@ areaText.y = display.contentHeight/3
 areaText:setTextColor( 0/255, 200/255, 222/255)
 
 --anchor the text and set the its (x,y) position
-areaOfCircle.anchorX = 0
-areaOfCircle.anchorY = 0
-areaTextCircle.x =20
-areaTextCircle.y =display.contentHeight
+areaTextCircle.anchorX = 0.0005
+areaTextCircle.anchorY = 0
+areaTextCircle.x =30
+areaTextCircle.y =display.contentHeight/1.2
+
+--set the color of the newText 
+areaTextCircle:setTextColor( 255/255, 153/255, 51/255)
 
 
