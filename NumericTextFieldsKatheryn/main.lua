@@ -42,8 +42,8 @@ local points
 -----------------------------------------------------------------------------------------
 --LCOAL VARIABLES FOR TIMER AND LIVES
 -----------------------------------------------------------------------------------------
-local totalSeconds = 5 
-local secondsLeft = 5 
+local totalSeconds = 10 
+local secondsLeft = 10
 local clockText 
 local countDownTimer
 
@@ -52,7 +52,7 @@ local heart1
 local heart2
 local heart3
 local heart4
-
+local gameOver
 --*** ADD LOCAL VARIABLES FOR : INCORRECT OBJECT, POINTS OBJECT, POINTS
 -----------------------------------------------------------------------------------------
 --SOUNDS
@@ -105,6 +105,31 @@ local function AskQuestion()
 	end
 end
 
+local function UpdateLives()
+
+	if (lives == 3) then 
+		heart4.isVisible = false
+		heart3.isVisible = true
+		heart2.isVisible = true
+		heart1.isVisible = true
+	elseif (lives == 2) then 
+		heart4.isVisible = false
+		heart3.isVisible = false
+		heart2.isVisible = true
+		heart1.isVisible = true
+	elseif (lives == 1) then
+		heart4.isVisible = false
+		heart3.isVisible = false
+		heart2.isVisible = false
+		heart1.isVisible = true
+	elseif (lives == 0) then 
+		heart4.isVisible = false
+		heart3.isVisible = false
+		heart2.isVisible = false
+		heart1.isVisible = false
+	end
+end
+
 
 local function UpdateTime()
 
@@ -118,26 +143,14 @@ local function UpdateTime()
 		--reset the number of seconds left
 		secondsLeft = totalSeconds
 		lives = lives - 1
-		
+		UpdateLives()
+		AskQuestion()
 
 
 		--***CALL THE FUNCTION TO ASK A NEW QUESTIION
 	end
 end
 
-
-local function UpdateLives()
-
-	if (lives == 3) then 
-		heart1.isVisible = false
-	elseif (lives == 2) then 
-		heart2.isVisible = false
-	elseif (lives == 1) then
-		heart3.isVisible = false
-	elseif (lives == 0) then 
-		heart4.isVisible = false
-	end
-end
 
 
 --function that calls the timer
@@ -179,13 +192,13 @@ local function NumericFieldListener(event)
 		if (userAnswer == correctAnswer) then 
 			numberOfPoints = numberOfPoints + 1
 			correctObject.isVisible = true
-
+			UpdateLives()
 			
 			correctSoundChannel = audio.play(correctSound)
 
-			points.text = "points = ".. numberOfPoints
+			pointsObjects.text = "points = ".. numberOfPoints
 
-			timer.performWithDelay(2000, HideCorrect)
+			timer.performWithDelay(1000, HideCorrect)
 
 		else
 			correctObject.isVisible = false
@@ -194,12 +207,15 @@ local function NumericFieldListener(event)
 
 			 --call the function
 			 UpdateLives()
+			 print(lives)
 
 
 			incorrectSoundChannel = audio.play(incorrectSound)
 
-			timer.performWithDelay(4000, HideIncorrect)
+			timer.performWithDelay(1000, HideIncorrect)
 
+
+			lives = lives -1
 		end
 
 		event.target.text = ""
@@ -231,7 +247,8 @@ clockText = display.newText("", display.contentWidth * 4 / 5, display.contentHei
 --create the incorrect text object and make it invisible
 incorrectObject = display.newText(" Incorrect ", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
 incorrectObject:setTextColor( 255/255, 210/255, 40/255)
-incorrectObject.isVisible = false
+incorrectObject.isVisible = false 
+
 -- Create numeric field 
 numericField = native.newTextField( display.contentWidth/2, display.contentHeight/2, 150, 80 )
 numericField.inputType = "number"
@@ -268,9 +285,6 @@ numericField:addEventListener("userInput", NumericFieldListener)
 
 --call the function to ask the questions
 AskQuestion()
-
---call the functions
-UpdateTime()
 
 --call the functions
 StartTimer()
