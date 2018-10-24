@@ -129,13 +129,13 @@ end
 local function UpdateLives()
 
 	if (lives == 3) then 
-		heart4.isVisible = false
-	elseif (lives == 2) then 
-		heart3.isVisible = false
-	elseif (lives == 1) then
-		heart2.isVisible = false
-	elseif (lives == 0) then 
 		heart1.isVisible = false
+	elseif (lives == 2) then 
+		heart2.isVisible = false
+	elseif (lives == 1) then
+		heart3.isVisible = false
+	elseif (lives == 0) then 
+		heart4.isVisible = false
 	end
 end
 
