@@ -109,23 +109,14 @@ local function UpdateLives()
 
 	if (lives == 3) then 
 		heart4.isVisible = false
-		heart3.isVisible = true
-		heart2.isVisible = true
-		heart1.isVisible = true
+
 	elseif (lives == 2) then 
-		heart4.isVisible = false
 		heart3.isVisible = false
-		heart2.isVisible = true
-		heart1.isVisible = true
+
 	elseif (lives == 1) then
-		heart4.isVisible = false
-		heart3.isVisible = false
 		heart2.isVisible = false
-		heart1.isVisible = true
-	elseif (lives == 0) then 
-		heart4.isVisible = false
-		heart3.isVisible = false
-		heart2.isVisible = false
+
+	elseif (lives == 0) then
 		heart1.isVisible = false
 	end
 end
