@@ -67,6 +67,10 @@ local correctSoundChannel
 local incorrectSound = audio.loadSound("Sounds/wrongSound.mp3")
 
 local incorrectSoundChannel 
+
+local gameOverSound = audio.loadSound("Sounds/correctSound.mp3")
+
+local gameOverSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -118,6 +122,12 @@ local function UpdateLives()
 
 	elseif (lives == 0) then
 		heart1.isVisible = false
+
+		gameOver = display.newImageRect("Images/gameOver.png", display.contentWidth, display.contentHeight)
+		gameOver.x = display.contentWidth * 1/2
+		gameOver.y = display.contentHeight * 1/2
+		numericField.isVisible = false
+		gameOverSoundChannel = audio.play(gameOverSound)
 	end
 end
 
@@ -183,8 +193,7 @@ local function NumericFieldListener(event)
 		if (userAnswer == correctAnswer) then 
 			numberOfPoints = numberOfPoints + 1
 			correctObject.isVisible = true
-			UpdateLives()
-			
+
 			correctSoundChannel = audio.play(correctSound)
 
 			pointsObjects.text = "points = ".. numberOfPoints
@@ -205,12 +214,8 @@ local function NumericFieldListener(event)
 
 			timer.performWithDelay(1000, HideIncorrect)
 
-
-			lives = lives -1
+			event.target.text = ""
 		end
-
-		event.target.text = ""
-
 	end
 end
 
@@ -264,7 +269,6 @@ heart3.y = display.contentHeight * 1 / 7
 heart4 = display.newImageRect("Images/heart.png", 100, 100)
 heart4.x = display.contentWidth * 4 / 8 
 heart4.y = display.contentHeight * 1 / 7
-
 
 --add the event listener for the numeric field
 numericField:addEventListener("userInput", NumericFieldListener)
