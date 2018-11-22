@@ -34,7 +34,6 @@ local incorrectAnswer2
 local randonOperator
 local correctSound
 local incorrectSound
-local incorrectSoundChannel
 local correctAnswers
 local numberOfPoints = 0
 local pointsObjects
