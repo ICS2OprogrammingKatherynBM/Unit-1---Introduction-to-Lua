@@ -182,9 +182,7 @@ local function NumericFieldListener(event)
 
 	-- User begins editing "numericField"
 	if( event.phase == " began " ) then
-		
-
-	elseif (event.phase == "submitted") then 
+		elseif (event.phase == "submitted") then 
 
 		--when the answer (enter key is pressed) set user input to user's answer
 		userAnswer = tonumber(event.target.text)
@@ -218,6 +216,8 @@ local function NumericFieldListener(event)
 		end
 	end
 end
+	
+
 
 -----------------------------------------------------------------------------------------
 --OBJECT CREATION
