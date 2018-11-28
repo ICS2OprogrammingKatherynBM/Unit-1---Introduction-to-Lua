@@ -13,7 +13,7 @@ local backgroundImage = display.newImageRect("Images/background.png", 2048, 1536
 local blueGirl = display.newImageRect("Images/blueGirl.png", 150, 150)
 local blueGirlWidth = blueGirl.width
 local blueGirlHeight = blueGirl.height
-<<<<<<< HEAD
+
 
 local bluePrincess = display.newImageRect("Images/bluePrincess.png", 200, 200)
 local bluePrincessWidth = bluePrincess.width
@@ -54,9 +54,6 @@ end
 
 --add the perspective listeners to each object
 blueGirl:addEventListener("touch", BlueGirlListener)
-
-=======
->>>>>>> 95287caa12f1c50d7ceb0d3307f9902ee9721caa
 
 local bluePrincess =  display.newImageRect("Images/bluePrincess.png", 300, 300)
 local bluePrincessWidth = bluePrincess.width
